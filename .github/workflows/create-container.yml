@@ -1,0 +1,31 @@
+name: Create Container Image
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-to-azure:
+    name: Deploy this app to Azure!
+    runs-on: ubuntu-latest
+
+    steps:
+    # So first, lets check out the repo!
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@main
+
+    # Now, we log into Azure!
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # We have everything, so lets buikd out the image!
+    - name: 'Build and push image'
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    - run: |
+        docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/actions-experiment:${{ github.sha }}
+        docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/actions-experiment:${{ github.sha }}
