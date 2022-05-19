@@ -42,3 +42,4 @@ jobs:
         registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         name: aci-actions-experiments
         location: 'west us'
+        entrypoint: '3000'
