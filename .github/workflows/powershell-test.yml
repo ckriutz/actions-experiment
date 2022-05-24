@@ -1,0 +1,17 @@
+name: Stat Scrape for Data
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scrape-county-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Script
+        run: |
+          $PSVersionTable
+          $var = "Hello World"
+          echo $var
+        shell: pwsh
