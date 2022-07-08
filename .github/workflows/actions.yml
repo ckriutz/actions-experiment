@@ -2,7 +2,11 @@
 # The second action will reference the first one, and get the time output and echo it as part of the console log.
 name: Actions Workflow
 
-on: [push]
+on:
+  schedule:
+    - cron: "0/5 * * * *"
+  pull_request:
+    types: [closed]
 
 jobs:
   run-github-actions:
